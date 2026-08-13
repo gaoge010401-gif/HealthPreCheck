@@ -1,0 +1,9 @@
+.git
+.agents
+.codex
+ppt-build/
+FlowPilot_basic_demo_deck.pptx
+FlowPilot_basic_demo_deck.pptx.inspect.ndjson
+flowpilot-demo/__pycache__/
+**/__pycache__/
+*.pyc
