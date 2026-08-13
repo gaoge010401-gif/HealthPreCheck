@@ -1,0 +1,10 @@
+.DS_Store
+.vercel
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.zip
+ppt-build/
+FlowPilot_basic_demo_deck.pptx
+FlowPilot_basic_demo_deck.pptx.inspect.ndjson
