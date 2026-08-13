@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HealthPreCheck</title>
+    <meta name="description" content="AI-assisted patient pre-registration for clinic front desk teams." />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <button class="brand" data-view="home" type="button" aria-label="HealthPreCheck home">
+        <span class="brand-icon">♡</span>
+        <span>HealthPreCheck</span>
+      </button>
+      <nav>
+        <button data-view="patient" type="button">Pre-Register</button>
+        <button data-view="staff" type="button">Staff Portal</button>
+        <button id="signin-open" class="signin-button" type="button">Sign In</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="view home-view active" data-page="home">
+        <div class="hero-copy">
+          <p class="tag">New AI-Powered Registration</p>
+          <h1>Skip the paperwork. Start your visit from home.</h1>
+          <p>Upload a medical chit or insurance letter, verify extracted details, and arrive with a check-in code ready for reception.</p>
+          <button class="primary" data-view="patient" type="button">Start Pre-Registration</button>
+        </div>
+        <div class="hero-panel">
+          <article><strong>Upload Documents</strong><span>PDF, image, DOCX, TXT and CSV intake.</span></article>
+          <article><strong>AI Verification</strong><span>Patient, insurer, package and billing fields are prepared for review.</span></article>
+          <article><strong>Fast Check-In</strong><span>Staff complete a short in-person ID check instead of retyping forms.</span></article>
+        </div>
+      </section>
+
+      <section class="view patient-view" data-page="patient">
+        <ol class="stepper">
+          <li class="done">1 Upload</li>
+          <li class="active">2 Verify</li>
+          <li>3 Health Info</li>
+          <li>4 Coverage</li>
+        </ol>
+
+        <div class="patient-grid">
+          <section class="card upload-card">
+            <h1>Upload Your Medical Chit or Insurance Letter</h1>
+            <p>HealthPreCheck extracts registration details before you arrive at the clinic.</p>
+            <label class="dropzone" for="document-upload">
+              <input id="document-upload" type="file" accept="image/*,.pdf,.docx,.txt,.csv" />
+              <strong>Drag and drop your file here</strong>
+              <span>Supports PDF, JPG, PNG, DOCX, TXT and CSV up to 10MB</span>
+              <em id="file-name">No file selected</em>
+            </label>
+            <div class="button-row">
+              <button id="analyze-upload" class="primary" type="button">Analyze Document</button>
+              <button id="sample-ready" type="button">Ready Sample</button>
+              <button id="sample-missing" type="button">Missing Info</button>
+              <button id="sample-review" type="button">Needs Review</button>
+            </div>
+            <p id="upload-status" class="status-text">Waiting for document</p>
+            <details>
+              <summary>Document text preview</summary>
+              <textarea id="ocr-text" placeholder="Extracted text will appear here. You can also paste text manually."></textarea>
+            </details>
+          </section>
+
+          <section class="card review-card">
+            <h1>Review Extracted Information</h1>
+            <p class="success">6 fields prepared from your document</p>
+            <form class="form-grid">
+              <label>Patient Name<input id="patient-name-input" value="Loh Amir" /></label>
+              <label>NRIC / ID Number<input id="patient-id-input" value="S8536477Z" /></label>
+              <label>Insurer / TPA<input id="insurer-input" value="Bluepeak Prosperity Life" /></label>
+              <label>Policy / Reference<input id="policy-input" value="BLP301158" /></label>
+              <label>Visit Purpose<select id="purpose-input"><option>Corporate health screening</option><option>Insurance medical examination</option><option>GP consultation</option></select></label>
+              <label>Patient Consent<select><option>Consent provided</option><option>Consent pending</option></select></label>
+            </form>
+          </section>
+
+          <section class="card coverage-card">
+            <h1>Coverage and Billing</h1>
+            <div class="coverage-items">
+              <span>Package<strong id="package-output">WELL2 - Comprehensive</strong></span>
+              <span>Covered by Insurer<strong>S$0.00</strong></span>
+              <span>Estimated Out-of-pocket<strong>S$45.00</strong></span>
+            </div>
+            <label class="check-row"><input type="checkbox" checked /> Bill my insurer directly for covered items.</label>
+            <label class="check-row"><input type="checkbox" checked /> I accept responsibility for uncovered charges.</label>
+            <button class="primary" type="button">Complete Pre-Registration</button>
+          </section>
+
+          <section class="confirmation">
+            <div class="qr">HPC<br />946C</div>
+            <div>
+              <h2>Show this code at reception</h2>
+              <p>Bring your physical NRIC or ID for final verification.</p>
+              <p>Clinic staff will approve the pre-loaded registration record.</p>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view staff-view" data-page="staff">
+        <div class="staff-header">
+          <div>
+            <h1>Clinic Dashboard</h1>
+            <p>Total pre-registered today: <strong>42</strong></p>
+          </div>
+          <div class="staff-actions">
+            <button type="button">Manual Registration</button>
+            <button class="primary" type="button">Pending TPA Forms</button>
+          </div>
+        </div>
+
+        <div class="service-banner"><strong>AI Eligibility Service Active</strong><span>12 Pending Verifications</span></div>
+
+        <section class="dashboard-card">
+          <div class="filters">
+            <button class="active" type="button">All (42)</button>
+            <button type="button">Ready (35)</button>
+            <button type="button">Waiting Verification (4)</button>
+            <button type="button">Needs Review (3)</button>
+          </div>
+          <div class="queue-layout">
+            <section class="queue-list" id="case-list" aria-label="Patient queue"></section>
+            <aside class="case-panel">
+              <div class="case-title">
+                <div><p id="case-type" class="tag"></p><h2 id="case-name"></h2><p id="case-summary"></p></div>
+                <span id="case-status" class="status-pill"></span>
+              </div>
+              <article id="issue-panel" class="issue-panel" hidden><h3 id="issue-title"></h3><ul id="issue-list"></ul></article>
+              <div class="detail-grid">
+                <article><h3>Patient and Document</h3><dl id="patient-fields"></dl></article>
+                <article><h3>Registration Checklist</h3><ol id="checklist"></ol></article>
+              </div>
+              <div class="detail-grid">
+                <article><h3>Fields to Confirm <span id="confidence"></span></h3><div id="field-table" class="field-table"></div></article>
+                <article><h3>Next Actions</h3><ul id="actions"></ul><div class="button-row"><button id="approve" type="button">Approve</button><button id="request" type="button">Request Info</button><button id="review" type="button">Review</button></div></article>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer>HealthPreCheck prototype for Hack4Health 2026.</footer>
+
+    <div id="signin-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="signin-title" hidden>
+      <section class="signin-card">
+        <button id="signin-close" class="close" type="button" aria-label="Close">x</button>
+        <h2 id="signin-title">Staff Sign In</h2>
+        <p>Use any staff ID and the demo code <strong>1234</strong>, or continue as demo staff.</p>
+        <form id="signin-form">
+          <label>Staff ID<input id="signin-staff" placeholder="frontdesk@clinic.sg" /></label>
+          <label>Access Code<input id="signin-code" type="password" placeholder="Enter demo code" /></label>
+          <button class="primary" type="submit">Sign In</button>
+          <button id="signin-demo" type="button">Continue as Demo Staff</button>
+        </form>
+      </section>
+    </div>
+
+    <div id="toast" class="toast" hidden></div>
+    <script src="./app.js"></script>
+  </body>
+</html>
