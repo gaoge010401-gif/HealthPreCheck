@@ -1,0 +1,24 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "functions": {
+    "api/extract.py": {
+      "maxDuration": 30,
+      "excludeFiles": "{ppt-build/**,FlowPilot_basic_demo_deck.pptx*,flowpilot-demo/__pycache__/**,**/__pycache__/**}"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/flowpilot-demo/index.html"
+    },
+    {
+      "source": "/app.js",
+      "destination": "/flowpilot-demo/app.js"
+    },
+    {
+      "source": "/styles.css",
+      "destination": "/flowpilot-demo/styles.css"
+    }
+  ]
+}
